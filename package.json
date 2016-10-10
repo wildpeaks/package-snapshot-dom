@@ -1,8 +1,12 @@
 {
   "name": "@wildpeaks/snapshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Converts an HTMLElement to a JSON tree",
   "main": "src/snapshot.js",
+  "files": [
+  	"src/snapshot.js",
+  	"test/snapshot.tests.js"
+  ],
   "scripts": {
     "test": "mocha"
   },
