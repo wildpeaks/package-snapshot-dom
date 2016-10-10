@@ -1,0 +1,32 @@
+{
+	"build_systems":
+	[
+		{
+			"name": "Mocha",
+			"shell_cmd": "mocha $file || true",
+			"working_dir": "$project_path"
+		}
+	],
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				"LICENSE",
+				".DS_Store",
+				".editorconfig",
+				".gitignore",
+				"*.lnk",
+				"*.url",
+				"*.log",
+				"*.sublime-project",
+				"*.sublime-workspace"
+			],
+			"folder_exclude_patterns":
+			[
+				"package-snapshot/node_modules"
+			],
+			"path": "."
+		}
+	]
+}
