@@ -4,7 +4,7 @@ const jsdom = require('jsdom');
 const snapshot = require('..');
 
 
-describe('@wildpeaks/snapshot', () => {
+describe('@wildpeaks/snapshot-dom', () => {
 	before(() => {
 		global.document = jsdom.jsdom('');
 		global.window = document.defaultView;

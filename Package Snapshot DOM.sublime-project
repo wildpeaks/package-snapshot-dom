@@ -24,7 +24,7 @@
 			],
 			"folder_exclude_patterns":
 			[
-				"package-snapshot/node_modules"
+				"package-snapshot-dom/node_modules"
 			],
 			"path": "."
 		}

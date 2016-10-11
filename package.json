@@ -1,6 +1,6 @@
 {
-  "name": "@wildpeaks/snapshot",
-  "version": "1.0.1",
+  "name": "@wildpeaks/snapshot-dom",
+  "version": "1.0.0",
   "description": "Converts an HTMLElement to a JSON tree",
   "main": "src/snapshot.js",
   "files": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wildpeaks/package-snapshot.git"
+    "url": "git+https://github.com/wildpeaks/package-snapshot-dom.git"
   },
   "keywords": [
     "wildpeaks",
@@ -22,9 +22,9 @@
   "author": "Cecile Muller",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wildpeaks/package-snapshot/issues"
+    "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
   },
-  "homepage": "https://github.com/wildpeaks/package-snapshot#readme",
+  "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
   "devDependencies": {
     "jsdom": "^9.5.0",
     "mocha": "^3.1.0"
