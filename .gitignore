@@ -17,6 +17,7 @@
 !.editorconfig
 !.gitattributes
 !.gitignore
+!.travis.yml
 !/src
 !/test
 !/package.json
