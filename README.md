@@ -1,6 +1,6 @@
 # Snapshot
 
-Converts an HTMLElement to a JSON tree, useful for DOM automated tests.
+Converts an HTMLElement to a JSON tree, useful for automated DOM tests.
 
 Install:
 
@@ -8,14 +8,35 @@ Install:
 
 Usage:
 
+	document.body.innerHTML = '<div class="class1"><div class="class2"></div><p>Hello World</p></div>';
+
 	assert.deepStrictEqual(
-		snapshot(document.body),
+		snapshot.toJSON(document.body),
 		{
 			tagName: 'body',
-			children: [
+			childNodes: [
 				{
-					tagName: 'p',
-					className: 'myclass'
+					tagName: 'div',
+					attributes: {
+						class: 'class1'
+					},
+					childNodes: [
+						{
+							tagName: 'div',
+							attributes: {
+								class: 'class2'
+							}
+						},
+						{
+							tagName: 'p',
+							childNodes: [
+								{
+									nodeName: '#text',
+									nodeValue: 'Hello World'
+								}
+							]
+						}
+					]
 				}
 			]
 		}
