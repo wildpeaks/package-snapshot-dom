@@ -8,7 +8,7 @@ Install:
 
 Usage:
 
-	document.body.innerHTML = '<div class="class1"><div class="class2"></div><p></p></div>';
+	document.body.innerHTML = '<div class="class1"><div class="class2"></div><p>Hello World</p></div>';
 
 	assert.deepStrictEqual(
 		snapshot.toJSON(document.body),
@@ -28,7 +28,13 @@ Usage:
 							}
 						},
 						{
-							tagName: 'p'
+							tagName: 'p',
+							childNodes: [
+								{
+									nodeName: '#text',
+									nodeValue: 'Hello World'
+								}
+							]
 						}
 					]
 				}
