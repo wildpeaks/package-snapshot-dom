@@ -1,6 +1,6 @@
 {
   "name": "@wildpeaks/snapshot-dom",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Converts a DOM element to a JSON tree",
   "main": "src/snapshot.js",
   "files": [
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
   "devDependencies": {
-    "jsdom": "^9.8.3",
-    "mocha": "^3.1.2"
+    "jsdom": "latest",
+    "mocha": "latest"
   }
 }

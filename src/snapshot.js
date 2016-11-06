@@ -38,7 +38,7 @@ function toJSON(node){
 		if (childNodes){
 			const l = childNodes.length;
 			if (l > 0){
-				const aggregated = new Array(length);
+				const aggregated = new Array(l);
 				for (let i = 0; i < l; i++) {
 					aggregated[i] = toJSON(childNodes[i]);
 				}
