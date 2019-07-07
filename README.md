@@ -1,7 +1,5 @@
 # Snapshot
 
-[![Build Status](https://travis-ci.org/wildpeaks/package-snapshot-dom.svg?branch=master)](https://travis-ci.org/wildpeaks/package-snapshot-dom)
-
 Converts an HTMLElement to a JSON tree, useful for automated DOM tests.
 
 Install:
