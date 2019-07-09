@@ -4,8 +4,8 @@
   "description": "Converts a DOM element to a JSON tree",
   "main": "src/snapshot.js",
   "files": [
-  	"src/snapshot.js",
-  	"test/snapshot.tests.js"
+    "src/snapshot.js",
+    "test/snapshot.tests.js"
   ],
   "scripts": {
     "test": "mocha"
