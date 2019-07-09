@@ -11,13 +11,13 @@
 # But allow those files and folders:
 #-----------------------------------------------------------------------------#
 
-!LICENSE
-!README.md
-!*.sublime-project
-!.editorconfig
-!.gitattributes
-!.gitignore
-!.travis.yml
+!/LICENSE
+!/README.md
+!/.editorconfig
+!/.gitattributes
+!/.gitignore
+!/.travis.yml
+!/azure-pipelines.yml
 !/src
 !/test
 !/package.json

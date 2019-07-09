@@ -1,8 +1,5 @@
 language: node_js
 node_js:
-  - '6.9.2'
-  - '7.0.0'
-  - '7.1.0'
-  - '7.2.0'
-  - '7.3.0'
+  - 'stable'
+  - 'lts/*'
 sudo: false
