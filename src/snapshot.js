@@ -28,6 +28,10 @@ function toJSON(node){
 				const aggregated = {};
 				for (let i = 0; i < l; i++){
 					const attr = attrs[i];
+					if (! attr.nodeValue) {
+						// Don't include empty values
+						continue;
+					}
 					aggregated[attr.nodeName] = attr.nodeValue;
 				}
 				serialized.attributes = aggregated;
