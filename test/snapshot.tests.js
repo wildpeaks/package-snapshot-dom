@@ -1,5 +1,7 @@
-/* eslint-env mocha */
-const assert = require('assert');
+/* eslint-env node, mocha */
+/* global document */
+'use strict';
+const {deepStrictEqual} = require('assert');
 const {JSDOM} = require('jsdom');
 const snapshot = require('..');
 
@@ -13,30 +15,30 @@ describe('toJSON', () => {
 	});
 
 	it('Missing element', () => {
-		assert.deepStrictEqual(snapshot.toJSON(), {});
+		deepStrictEqual(snapshot.toJSON(), {});
 	});
 	it('Invalid element (0)', () => {
-		assert.deepStrictEqual(snapshot.toJSON(0), {});
+		deepStrictEqual(snapshot.toJSON(0), {});
 	});
 	it('Invalid element (1)', () => {
-		assert.deepStrictEqual(snapshot.toJSON(1), {});
+		deepStrictEqual(snapshot.toJSON(1), {});
 	});
 	it('Invalid element (false)', () => {
-		assert.deepStrictEqual(snapshot.toJSON(false), {});
+		deepStrictEqual(snapshot.toJSON(false), {});
 	});
 	it('Invalid element (true)', () => {
-		assert.deepStrictEqual(snapshot.toJSON(true), {});
+		deepStrictEqual(snapshot.toJSON(true), {});
 	});
 	it('Invalid element (null)', () => {
-		assert.deepStrictEqual(snapshot.toJSON(null), {});
+		deepStrictEqual(snapshot.toJSON(null), {});
 	});
 	it('Invalid element (undefined)', () => {
-		assert.deepStrictEqual(snapshot.toJSON(undefined), {}); // eslint-disable-line no-undefined
+		deepStrictEqual(snapshot.toJSON(undefined), {}); // eslint-disable-line no-undefined
 	});
 
 	it('Empty body', () => {
 		document.body.innerHTML = '';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body'
@@ -46,7 +48,7 @@ describe('toJSON', () => {
 
 	it('Single paragraph in body', () => {
 		document.body.innerHTML = '<p class="test1"></p>';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body',
@@ -65,7 +67,7 @@ describe('toJSON', () => {
 	it('Single paragraph in detached element', () => {
 		const element = document.createElement('p');
 		element.className = 'test2';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(element),
 			{
 				tagName: 'p',
@@ -78,7 +80,7 @@ describe('toJSON', () => {
 
 	it('Nested elements in body', () => {
 		document.body.innerHTML = '<div class="outer"><div class="inner"></div><p></p></div>';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body',
@@ -107,7 +109,7 @@ describe('toJSON', () => {
 
 	it('Text fragment', () => {
 		document.body.innerHTML = '<p>Hello World</p>';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body',
@@ -128,7 +130,7 @@ describe('toJSON', () => {
 
 	it('Attributes', () => {
 		document.body.innerHTML = '<button role="heading" style="color: green">Search</button>';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body',
@@ -153,7 +155,7 @@ describe('toJSON', () => {
 
 	it('Duplicated attribute (alphabetic order)', () => {
 		document.body.innerHTML = '<div class="AAA" class="ZZZ"></div>';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body',
@@ -170,7 +172,7 @@ describe('toJSON', () => {
 	});
 	it('Duplicated attribute (reverse order)', () => {
 		document.body.innerHTML = '<div class="ZZZ" class="AAA"></div>';
-		assert.deepStrictEqual(
+		deepStrictEqual(
 			snapshot.toJSON(document.body),
 			{
 				tagName: 'body',
@@ -179,6 +181,68 @@ describe('toJSON', () => {
 						tagName: 'div',
 						attributes: {
 							class: 'ZZZ'
+						}
+					}
+				]
+			}
+		);
+	});
+
+	it('Empty attributes (default behavior)', () => {
+		document.body.innerHTML = '<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
+		deepStrictEqual(
+			snapshot.toJSON(document.body),
+			{
+				tagName: 'body',
+				childNodes: [
+					{
+						tagName: 'img',
+						attributes: {
+							'data-param1': '',
+							'data-param2': '',
+							'data-param3': '  ',
+							'data-param4': 'false',
+							'data-param5': 'false'
+						}
+					}
+				]
+			}
+		);
+	});
+	it('Empty attributes (skip: false)', () => {
+		document.body.innerHTML = '<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
+		deepStrictEqual(
+			snapshot.toJSON(document.body, false),
+			{
+				tagName: 'body',
+				childNodes: [
+					{
+						tagName: 'img',
+						attributes: {
+							'data-param1': '',
+							'data-param2': '',
+							'data-param3': '  ',
+							'data-param4': 'false',
+							'data-param5': 'false'
+						}
+					}
+				]
+			}
+		);
+	});
+	it('Empty attributes (skip: true)', () => {
+		document.body.innerHTML = '<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
+		deepStrictEqual(
+			snapshot.toJSON(document.body, true),
+			{
+				tagName: 'body',
+				childNodes: [
+					{
+						tagName: 'img',
+						attributes: {
+							'data-param3': '  ',
+							'data-param4': 'false',
+							'data-param5': 'false'
 						}
 					}
 				]
