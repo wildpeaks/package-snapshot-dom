@@ -38,7 +38,7 @@ function toJSON(node, skipEmpty){
 			}
 		}
 
-		const childNodes = node.childNodes;
+		const {childNodes} = node;
 		if (childNodes){
 			const l = childNodes.length;
 			if (l > 0){
