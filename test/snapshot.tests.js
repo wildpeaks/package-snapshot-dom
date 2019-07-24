@@ -1,4 +1,6 @@
-/* eslint-env mocha */
+/* eslint-env node, mocha */
+/* global document */
+'use strict';
 const assert = require('assert');
 const {JSDOM} = require('jsdom');
 const snapshot = require('..');
@@ -179,6 +181,68 @@ describe('toJSON', () => {
 						tagName: 'div',
 						attributes: {
 							class: 'ZZZ'
+						}
+					}
+				]
+			}
+		);
+	});
+
+	it('Empty attributes (default behavior)', () => {
+		document.body.innerHTML = '<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
+		assert.deepStrictEqual(
+			snapshot.toJSON(document.body),
+			{
+				tagName: 'body',
+				childNodes: [
+					{
+						tagName: 'img',
+						attributes: {
+							'data-param1': '',
+							'data-param2': '',
+							'data-param3': '  ',
+							'data-param4': 'false',
+							'data-param5': 'false'
+						}
+					}
+				]
+			}
+		);
+	});
+	it('Empty attributes (skip: false)', () => {
+		document.body.innerHTML = '<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
+		assert.deepStrictEqual(
+			snapshot.toJSON(document.body, false),
+			{
+				tagName: 'body',
+				childNodes: [
+					{
+						tagName: 'img',
+						attributes: {
+							'data-param1': '',
+							'data-param2': '',
+							'data-param3': '  ',
+							'data-param4': 'false',
+							'data-param5': 'false'
+						}
+					}
+				]
+			}
+		);
+	});
+	it('Empty attributes (skip: true)', () => {
+		document.body.innerHTML = '<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
+		assert.deepStrictEqual(
+			snapshot.toJSON(document.body, true),
+			{
+				tagName: 'body',
+				childNodes: [
+					{
+						tagName: 'img',
+						attributes: {
+							'data-param3': '  ',
+							'data-param4': 'false',
+							'data-param5': 'false'
 						}
 					}
 				]
