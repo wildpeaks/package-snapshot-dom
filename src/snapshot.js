@@ -4,9 +4,10 @@
 /**
  * Convert a DOM element to a simpler JSON tree.
  * @param  {Node} node
+ * @param  {Boolean} skipEmpty Skips node values that evaluate to false (undefined and empty strings)
  * @return {Object}
  */
-function toJSON(node){
+function toJSON(node, skipEmpty){
 	const serialized = {};
 	const isValid = (typeof node === 'object') && (node !== null);
 	if (isValid){
@@ -28,11 +29,10 @@ function toJSON(node){
 				const aggregated = {};
 				for (let i = 0; i < l; i++){
 					const attr = attrs[i];
-					if (! attr.nodeValue) {
-						// Don't include empty values
-						continue;
+					const skip = skipEmpty && !attr.nodeValue;
+					if (!skip){
+						aggregated[attr.nodeName] = attr.nodeValue;
 					}
-					aggregated[attr.nodeName] = attr.nodeValue;
 				}
 				serialized.attributes = aggregated;
 			}
@@ -43,8 +43,8 @@ function toJSON(node){
 			const l = childNodes.length;
 			if (l > 0){
 				const aggregated = new Array(l);
-				for (let i = 0; i < l; i++) {
-					aggregated[i] = toJSON(childNodes[i]);
+				for (let i = 0; i < l; i++){
+					aggregated[i] = toJSON(childNodes[i], skipEmpty);
 				}
 				serialized.childNodes = aggregated;
 			}
