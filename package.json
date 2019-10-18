@@ -34,6 +34,6 @@
     "@wildpeaks/eslint-config-commonjs": "7.1.0",
     "eslint": "6.5.1",
     "jsdom": "15.2.0",
-    "mocha": "6.2.1"
+    "mocha": "6.2.2"
   }
 }
