@@ -32,7 +32,7 @@
   "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "7.3.0",
-    "eslint": "6.7.2",
+    "eslint": "6.8.0",
     "jsdom": "15.2.1",
     "mocha": "6.2.2"
   }
