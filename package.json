@@ -1,6 +1,6 @@
 {
   "name": "@wildpeaks/snapshot-dom",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Converts a DOM element to a JSON tree",
   "author": "Cecile Muller",
   "license": "MIT",
