@@ -16,6 +16,7 @@
 !/test
 !/package.json
 !/azure-pipelines.yml
+!/wallaby.js
 
 # But make sure to ignore these regardless:
 WAS *
