@@ -4,6 +4,19 @@
   "description": "Converts a DOM element to a JSON tree",
   "author": "Cecile Muller",
   "license": "MIT",
+  "keywords": [
+    "wildpeaks",
+    "assert",
+    "dom"
+  ],
+  "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wildpeaks/package-snapshot-dom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
+  },
   "eslintConfig": {
     "extends": "@wildpeaks/commonjs"
   },
@@ -16,19 +29,6 @@
     "lint": "eslint ./src/**/*.js",
     "test": "mocha test/*.spec.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wildpeaks/package-snapshot-dom.git"
-  },
-  "keywords": [
-    "wildpeaks",
-    "assert",
-    "dom"
-  ],
-  "bugs": {
-    "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
-  },
-  "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "7.3.0",
     "eslint": "6.8.0",
