@@ -13,9 +13,8 @@
     "test/snapshot.tests.js"
   ],
   "scripts": {
-    "test:lint": "eslint ./src/**/*.js",
-    "test:specs": "mocha",
-    "test": "npm run test:lint && npm run test:specs"
+    "lint": "eslint ./src/**/*.js",
+    "test": "mocha test/*.spec.js"
   },
   "repository": {
     "type": "git",
