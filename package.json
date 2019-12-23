@@ -17,6 +17,12 @@
   "eslintConfig": {
     "extends": "@wildpeaks/commonjs"
   },
+  "greenkeeper": {
+    "commitMessages": {
+      "dependencyUpdate": "feat: update ${dependency}",
+      "devDependencyUpdate": "chore: update ${dependency}"
+    }
+  },
   "main": "src/snapshot.js",
   "files": [
     "src"
