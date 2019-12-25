@@ -1,0 +1,13 @@
+{
+	"tagName": "body",
+	"childNodes": [
+		{
+			"tagName": "img",
+			"attributes": {
+				"data-param3": "  ",
+				"data-param4": "false",
+				"data-param5": "false"
+			}
+		}
+	]
+}

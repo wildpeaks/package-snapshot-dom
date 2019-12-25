@@ -1,17 +1,13 @@
 /* eslint-env node, mocha */
-/* global document */
 "use strict";
+const {join} = require("path");
+const {readFileSync} = require("fs");
 const {deepStrictEqual} = require("assert");
 const {JSDOM} = require("jsdom");
 const snapshot = require("..");
+const fixturesFolder = join(__dirname, "fixtures");
 
-describe("JSDOM Tests", () => {
-	// Reset DOM
-	before(() => {
-		const dom = new JSDOM("<!DOCTYPE html><html><head></head><body></body></html>");
-		global.document = dom.window.document;
-	});
-
+describe("Invalid", () => {
 	it("Missing element", () => {
 		deepStrictEqual(snapshot.toJSON(), {});
 	});
@@ -33,30 +29,22 @@ describe("JSDOM Tests", () => {
 	it("Invalid element (undefined)", () => {
 		deepStrictEqual(snapshot.toJSON(undefined), {});
 	});
+});
 
-	it("Empty body", () => {
-		document.body.innerHTML = "";
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body"
-		});
+function testFixture(id, skip) {
+	it(`Fixture: ${id}`, () => {
+		const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
+		const expected = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
+		const dom = new JSDOM(html);
+		const actual = snapshot.toJSON(dom.window.document.body, skip);
+		deepStrictEqual(actual, expected);
 	});
+}
 
-	it("Single paragraph in body", () => {
-		document.body.innerHTML = '<p class="test1"></p>';
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "p",
-					attributes: {
-						class: "test1"
-					}
-				}
-			]
-		});
-	});
-
+describe("JSDOM: Valid", () => {
 	it("Single paragraph in detached element", () => {
+		const dom = new JSDOM("<!DOCTYPE html><html><head></head><body></body></html>");
+		const {document} = dom.window;
 		const element = document.createElement("p");
 		element.className = "test2";
 		deepStrictEqual(snapshot.toJSON(element), {
@@ -66,155 +54,14 @@ describe("JSDOM Tests", () => {
 			}
 		});
 	});
-
-	it("Nested elements in body", () => {
-		document.body.innerHTML = '<div class="outer"><div class="inner"></div><p></p></div>';
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "div",
-					attributes: {
-						class: "outer"
-					},
-					childNodes: [
-						{
-							tagName: "div",
-							attributes: {
-								class: "inner"
-							}
-						},
-						{
-							tagName: "p"
-						}
-					]
-				}
-			]
-		});
-	});
-
-	it("Text fragment", () => {
-		document.body.innerHTML = "<p>Hello World</p>";
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "p",
-					childNodes: [
-						{
-							nodeName: "#text",
-							nodeValue: "Hello World"
-						}
-					]
-				}
-			]
-		});
-	});
-
-	it("Attributes", () => {
-		document.body.innerHTML = '<button role="heading" style="color: green">Search</button>';
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "button",
-					attributes: {
-						role: "heading",
-						style: "color: green"
-					},
-					childNodes: [
-						{
-							nodeName: "#text",
-							nodeValue: "Search"
-						}
-					]
-				}
-			]
-		});
-	});
-
-	it("Duplicated attribute (alphabetic order)", () => {
-		document.body.innerHTML = '<div class="AAA" class="ZZZ"></div>';
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "div",
-					attributes: {
-						class: "AAA"
-					}
-				}
-			]
-		});
-	});
-	it("Duplicated attribute (reverse order)", () => {
-		document.body.innerHTML = '<div class="ZZZ" class="AAA"></div>';
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "div",
-					attributes: {
-						class: "ZZZ"
-					}
-				}
-			]
-		});
-	});
-
-	it("Empty attributes (default behavior)", () => {
-		document.body.innerHTML =
-			'<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
-		deepStrictEqual(snapshot.toJSON(document.body), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "img",
-					attributes: {
-						"data-param1": "",
-						"data-param2": "",
-						"data-param3": "  ",
-						"data-param4": "false",
-						"data-param5": "false"
-					}
-				}
-			]
-		});
-	});
-	it("Empty attributes (skip: false)", () => {
-		document.body.innerHTML =
-			'<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
-		deepStrictEqual(snapshot.toJSON(document.body, false), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "img",
-					attributes: {
-						"data-param1": "",
-						"data-param2": "",
-						"data-param3": "  ",
-						"data-param4": "false",
-						"data-param5": "false"
-					}
-				}
-			]
-		});
-	});
-	it("Empty attributes (skip: true)", () => {
-		document.body.innerHTML =
-			'<img data-param1 data-param2="" data-param3="  " data-param4="false" data-param5=false />';
-		deepStrictEqual(snapshot.toJSON(document.body, true), {
-			tagName: "body",
-			childNodes: [
-				{
-					tagName: "img",
-					attributes: {
-						"data-param3": "  ",
-						"data-param4": "false",
-						"data-param5": "false"
-					}
-				}
-			]
-		});
-	});
+	testFixture("empty_body");
+	testFixture("single_paragraph_in_body");
+	testFixture("nested_elements_in_body");
+	testFixture("text_fragment");
+	testFixture("attributes");
+	testFixture("duplicated_attribute_alphabetic_order");
+	testFixture("duplicated_attribute_reverse_order");
+	testFixture("empty_attributes_default_behavior");
+	testFixture("empty_attributes_skip_false", false);
+	testFixture("empty_attributes_skip_true", true);
 });

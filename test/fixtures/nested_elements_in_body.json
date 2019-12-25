@@ -1,0 +1,22 @@
+{
+	"tagName": "body",
+	"childNodes": [
+		{
+			"tagName": "div",
+			"attributes": {
+				"class": "outer"
+			},
+			"childNodes": [
+				{
+					"tagName": "div",
+					"attributes": {
+						"class": "inner"
+					}
+				},
+				{
+					"tagName": "p"
+				}
+			]
+		}
+	]
+}
