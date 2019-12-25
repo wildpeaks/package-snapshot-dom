@@ -5,7 +5,7 @@ const {deepStrictEqual} = require("assert");
 const {JSDOM} = require("jsdom");
 const snapshot = require("..");
 
-describe("toJSON", () => {
+describe("JSDOM Tests", () => {
 	// Reset DOM
 	before(() => {
 		const dom = new JSDOM("<!DOCTYPE html><html><head></head><body></body></html>");
