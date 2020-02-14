@@ -7,12 +7,12 @@ const {JSDOM} = require("jsdom");
 const snapshot = require("..");
 const fixturesFolder = join(__dirname, "fixtures");
 
-function testFixture(id, skip) {
+function testFixture(id, options) {
 	it(`Fixture: ${id}`, () => {
 		const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
 		const expected = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
 		const dom = new JSDOM(html);
-		const actual = snapshot.toJSON(dom.window.document.body, skip);
+		const actual = snapshot.toJSON(dom.window.document.body, options);
 		deepStrictEqual(actual, expected);
 	});
 }
@@ -38,6 +38,6 @@ describe("JSDOM", () => {
 	testFixture("duplicated_attribute_alphabetic_order");
 	testFixture("duplicated_attribute_reverse_order");
 	testFixture("empty_attributes_default_behavior");
-	testFixture("empty_attributes_skip_false", false);
-	testFixture("empty_attributes_skip_true", true);
+	testFixture("empty_attributes_skip_false", {skipEmptyValue: false});
+	testFixture("empty_attributes_skip_true", {skipEmptyValue: true});
 });

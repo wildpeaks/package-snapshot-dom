@@ -1,12 +1,17 @@
 "use strict";
 
 /**
+ * @typedef {Object} Options
+ * @property {Boolean} skipEmptyValue - Skips node values that evaluate to false (undefined and zero-length strings)
+ */
+
+/**
  * Convert a DOM element to a simpler JSON tree.
  * @param  {Node} node
- * @param  {Boolean} skipEmpty Skips node values that evaluate to false (undefined and empty strings)
+ * @param  {Options} options
  * @return {Object}
  */
-function toJSON(node, skipEmpty) {
+function toJSON(node, options = {}) {
 	const serialized = {};
 	const isValid = typeof node === "object" && node !== null;
 	if (isValid) {
@@ -28,7 +33,7 @@ function toJSON(node, skipEmpty) {
 				const aggregated = {};
 				for (let i = 0; i < l; i++) {
 					const attr = attrs[i];
-					const skip = skipEmpty && !attr.nodeValue;
+					const skip = options.skipEmptyValue && !attr.nodeValue;
 					if (!skip) {
 						aggregated[attr.nodeName] = attr.nodeValue;
 					}
@@ -43,7 +48,7 @@ function toJSON(node, skipEmpty) {
 			if (l > 0) {
 				const aggregated = new Array(l);
 				for (let i = 0; i < l; i++) {
-					aggregated[i] = toJSON(childNodes[i], skipEmpty);
+					aggregated[i] = toJSON(childNodes[i], options);
 				}
 				serialized.childNodes = aggregated;
 			}

@@ -70,6 +70,6 @@ describe("Puppeteer", () => {
 	testFixture("duplicated_attribute_alphabetic_order");
 	testFixture("duplicated_attribute_reverse_order");
 	testFixture("empty_attributes_default_behavior");
-	testFixture("empty_attributes_skip_false", false);
-	testFixture("empty_attributes_skip_true", true);
+	testFixture("empty_attributes_skip_false", {skipEmptyValue: false});
+	testFixture("empty_attributes_skip_true", {skipEmptyValue: true});
 });
