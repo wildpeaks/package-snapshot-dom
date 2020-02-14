@@ -2,11 +2,15 @@
 
 /**
  * Convert a DOM element to a simpler JSON tree.
- * @param  {Node} node
- * @param  {Boolean} skipEmpty Skips node values that evaluate to false (undefined and empty strings)
+ *
+ * @param  {Node}      node
+ * @param  {Object}    [options]
+ * @param  {boolean}   [options.skipEmpty] Skips node values that evaluate to false (undefined and empty strings)
+ * @param  {string[]}  [options.sortAttrs] Sorts the space-delimited string values of provided attributes.
+ *
  * @return {Object}
  */
-function toJSON(node, skipEmpty) {
+function toJSON(node, { skipEmpty = false, sortAttrs = [] }) {
 	const serialized = {};
 	const isValid = typeof node === "object" && node !== null;
 	if (isValid) {
@@ -29,9 +33,12 @@ function toJSON(node, skipEmpty) {
 				for (let i = 0; i < l; i++) {
 					const attr = attrs[i];
 					const skip = skipEmpty && !attr.nodeValue;
+					const sort = attr.nodeValue && 'string' === typeof attr.nodeValue && sortAttrs.includes(attr.nodeName);
+
 					if (!skip) {
-						aggregated[attr.nodeName] = attr.nodeValue;
+						aggregated[attr.nodeName] = sort ? attr.nodeValue.split(' ').sort().join(' ') : attr.nodeValue;
 					}
+
 				}
 				serialized.attributes = aggregated;
 			}
@@ -43,7 +50,7 @@ function toJSON(node, skipEmpty) {
 			if (l > 0) {
 				const aggregated = new Array(l);
 				for (let i = 0; i < l; i++) {
-					aggregated[i] = toJSON(childNodes[i], skipEmpty);
+					aggregated[i] = toJSON(childNodes[i], { skipEmpty, sortAttrs });
 				}
 				serialized.childNodes = aggregated;
 			}
