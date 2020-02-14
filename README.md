@@ -57,7 +57,7 @@ document.body.innerHTML = '<img param1 param2="" param3="hello" />;
 
 // Without skipping
 assert.deepStrictEqual(
-	snapshot.toJSON(document.body, false),
+	snapshot.toJSON(document.body, {skipEmptyValue: false}),
 	{
 		tagName: 'body',
 		childNodes: [
@@ -75,7 +75,7 @@ assert.deepStrictEqual(
 
 // With skipping
 assert.deepStrictEqual(
-	snapshot.toJSON(document.body, true),
+	snapshot.toJSON(document.body, {skipEmptyValue: true}),
 	{
 		tagName: 'body',
 		childNodes: [
@@ -90,5 +90,5 @@ assert.deepStrictEqual(
 );
 ````
 
-Note that strings containing only whitespace are not empty.
+Note that strings containing only whitespace characters are not empty values.
 
