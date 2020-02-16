@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "configs": {
+      "packages": [
+        "package.json",
+        "packages/snapshot-dom/package.json"
+      ]
+    }
+  }
+}
