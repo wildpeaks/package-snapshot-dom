@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 "use strict";
 const {deepStrictEqual} = require("assert");
-const snapshot = require("..");
+const snapshot = require("../packages/snapshot-dom/lib/node");
 
 describe("Invalid", () => {
 	it("Missing element", () => {

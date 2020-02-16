@@ -4,7 +4,7 @@ module.exports = () => ({
 	debug: true,
 	testFramework: "mocha",
 	files: [
-		"package.json",
+		"packages/**/*.js",
 		"src/**/*.js"
 	],
 	tests: [

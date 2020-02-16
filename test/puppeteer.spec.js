@@ -8,7 +8,7 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 
 const fixturesFolder = join(__dirname, "fixtures");
-const script = join(__dirname, "../lib/browser.js");
+const script = join(__dirname, "../packages/snapshot-dom/lib/browser.js");
 
 const port = 8888;
 const baseurl = `http://localhost:${port}/`;
