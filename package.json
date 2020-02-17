@@ -19,7 +19,7 @@
     }
   },
   "scripts": {
-    "build": "node src/build.js",
+    "build": "mocha src/build.js",
     "watch": "nodemon src/build.js --watch src",
     "test": "mocha test/*.spec.js"
   },
