@@ -1,6 +1,6 @@
 "use strict";
 
-function toJSON(node, options = {}) {
+function toJSON(node) {
 	const serialized = {};
 	const isValid = typeof node === "object" && node !== null;
 	if (isValid) {
@@ -20,10 +20,7 @@ function toJSON(node, options = {}) {
 				const aggregated = {};
 				for (let i = 0; i < l; i++) {
 					const attr = attrs[i];
-					const skip = options.skipEmptyValue && !attr.nodeValue;
-					if (!skip) {
-						aggregated[attr.nodeName] = attr.nodeValue;
-					}
+					aggregated[attr.nodeName] = attr.nodeValue;
 				}
 				serialized.attributes = aggregated;
 			}
@@ -35,7 +32,7 @@ function toJSON(node, options = {}) {
 			if (l > 0) {
 				const aggregated = new Array(l);
 				for (let i = 0; i < l; i++) {
-					aggregated[i] = toJSON(childNodes[i], options);
+					aggregated[i] = toJSON(childNodes[i]);
 				}
 				serialized.childNodes = aggregated;
 			}

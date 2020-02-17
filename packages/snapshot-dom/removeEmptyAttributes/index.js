@@ -1,0 +1,1 @@
+"use strict";function removeEmptyAttributes(t){if(Array.isArray(t.childNodes)&&(t.childNodes=t.childNodes.map(removeEmptyAttributes)),t&&t.attributes){const e=[];for(const r in t.attributes)t.attributes[r]||e.push(r);e.forEach(e=>delete t.attributes[e])}return t}module.exports.removeEmptyAttributes=removeEmptyAttributes;

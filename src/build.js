@@ -36,3 +36,4 @@ function build(nodeName, browserName, folder) {
 }
 
 build("toJSON", "snapshotToJSON", join(baseFolder, "lib"));
+build("removeEmptyAttributes", "snapshotRemoveEmptyAttributes", join(baseFolder, "removeEmptyAttributes"));
