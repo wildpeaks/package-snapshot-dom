@@ -4,40 +4,44 @@ const {join} = require("path");
 const {readFileSync} = require("fs");
 const {deepStrictEqual} = require("assert");
 const {JSDOM} = require("jsdom");
-const snapshot = require("../packages/snapshot-dom/lib/index");
+const {toJSON} = require("../packages/snapshot-dom/lib");
+const {removeEmptyAttributes} = require("../packages/snapshot-dom/removeEmptyAttributes");
 const fixturesFolder = join(__dirname, "fixtures");
 
-function testFixture(id, options) {
+function testFixture(id, removeEmpty = false) {
 	it(`Fixture: ${id}`, () => {
 		const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
 		const expected = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
 		const dom = new JSDOM(html);
-		const actual = snapshot.toJSON(dom.window.document.body, options);
+		let actual = toJSON(dom.window.document.body);
+		if (removeEmpty) {
+			actual = removeEmptyAttributes(actual);
+		}
 		deepStrictEqual(actual, expected);
 	});
 }
 
 describe("Invalid", () => {
 	it("Missing element", () => {
-		deepStrictEqual(snapshot.toJSON(), {});
+		deepStrictEqual(toJSON(), {});
 	});
 	it("Invalid element (0)", () => {
-		deepStrictEqual(snapshot.toJSON(0), {});
+		deepStrictEqual(toJSON(0), {});
 	});
 	it("Invalid element (1)", () => {
-		deepStrictEqual(snapshot.toJSON(1), {});
+		deepStrictEqual(toJSON(1), {});
 	});
 	it("Invalid element (false)", () => {
-		deepStrictEqual(snapshot.toJSON(false), {});
+		deepStrictEqual(toJSON(false), {});
 	});
 	it("Invalid element (true)", () => {
-		deepStrictEqual(snapshot.toJSON(true), {});
+		deepStrictEqual(toJSON(true), {});
 	});
 	it("Invalid element (null)", () => {
-		deepStrictEqual(snapshot.toJSON(null), {});
+		deepStrictEqual(toJSON(null), {});
 	});
 	it("Invalid element (undefined)", () => {
-		deepStrictEqual(snapshot.toJSON(undefined), {});
+		deepStrictEqual(toJSON(undefined), {});
 	});
 });
 
@@ -47,7 +51,7 @@ describe("JSDOM", () => {
 		const {document} = dom.window;
 		const element = document.createElement("p");
 		element.className = "test2";
-		deepStrictEqual(snapshot.toJSON(element), {
+		deepStrictEqual(toJSON(element), {
 			tagName: "p",
 			attributes: {
 				class: "test2"
@@ -61,7 +65,6 @@ describe("JSDOM", () => {
 	testFixture("attributes");
 	testFixture("duplicated_attribute_alphabetic_order");
 	testFixture("duplicated_attribute_reverse_order");
-	testFixture("empty_attributes_default_behavior");
-	testFixture("empty_attributes_skip_false", {skipEmptyValue: false});
-	testFixture("empty_attributes_skip_true", {skipEmptyValue: true});
+	testFixture("remove_empty_false", false);
+	testFixture("remove_empty_true", true);
 });

@@ -8,7 +8,8 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 
 const fixturesFolder = join(__dirname, "fixtures");
-const script = join(__dirname, "../packages/snapshot-dom/lib/browser.js");
+const script1 = join(__dirname, "../packages/snapshot-dom/lib/browser.js");
+const script2 = join(__dirname, "../packages/snapshot-dom/removeEmptyAttributes/browser.js");
 
 const port = 8888;
 const baseurl = `http://localhost:${port}/`;
@@ -40,7 +41,7 @@ after(function() {
 	});
 });
 
-function testFixture(id, skip) {
+function testFixture(id, removeEmpty = false) {
 	it(`Fixture: ${id}`, /* @this */ async function() {
 		this.slow(15000);
 		this.timeout(15000);
@@ -50,9 +51,17 @@ function testFixture(id, skip) {
 			const page = await browser.newPage();
 			await page.goto(`${baseurl}${id}.html`, {waitUntil: "load"});
 			await sleep(300);
-			await page.addScriptTag({path: script});
+			await page.addScriptTag({path: script1});
+			await page.addScriptTag({path: script2});
 			await sleep(300);
-			actualNodes = await page.evaluate(opt => window.snapshotToJSON(document.body, opt), skip);
+			actualNodes = await page.evaluate(removeEmpty_ => {
+				// eslint-disable-next-line no-var
+				var tree = window.snapshotToJSON(document.body);
+				if (removeEmpty_) {
+					tree = window.snapshotRemoveEmptyAttributes(tree);
+				}
+				return tree;
+			}, removeEmpty);
 		} finally {
 			await browser.close();
 		}
@@ -69,7 +78,6 @@ describe("Puppeteer", () => {
 	testFixture("attributes");
 	testFixture("duplicated_attribute_alphabetic_order");
 	testFixture("duplicated_attribute_reverse_order");
-	testFixture("empty_attributes_default_behavior");
-	testFixture("empty_attributes_skip_false", {skipEmptyValue: false});
-	testFixture("empty_attributes_skip_true", {skipEmptyValue: true});
+	testFixture("remove_empty_false", false);
+	testFixture("remove_empty_true", true);
 });
