@@ -9,7 +9,7 @@
     "assert",
     "dom"
   ],
-  "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
+  "homepage": "https://github.com/wildpeaks/package-snapshot-dom/tree/master/packages/snapshot-dom#readme",
   "repository": "https://github.com/wildpeaks/package-snapshot-dom",
   "bugs": {
     "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
