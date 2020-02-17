@@ -1,6 +1,6 @@
 "use strict";
 
-function snapshotToJson(node, options = {}) {
+function toJSON(node, options = {}) {
 	const serialized = {};
 	const isValid = typeof node === "object" && node !== null;
 	if (isValid) {
@@ -35,7 +35,7 @@ function snapshotToJson(node, options = {}) {
 			if (l > 0) {
 				const aggregated = new Array(l);
 				for (let i = 0; i < l; i++) {
-					aggregated[i] = snapshotToJson(childNodes[i], options);
+					aggregated[i] = toJSON(childNodes[i], options);
 				}
 				serialized.childNodes = aggregated;
 			}
@@ -44,4 +44,4 @@ function snapshotToJson(node, options = {}) {
 	return serialized;
 }
 
-module.exports.toJSON = snapshotToJson;
+module.exports.toJSON = toJSON;

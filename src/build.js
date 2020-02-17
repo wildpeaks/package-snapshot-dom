@@ -13,26 +13,26 @@ function writeMinified(code, filepath) {
 	console.log("OK", relative(baseFolder, filepath));
 }
 
-function build(functionName, moduleName, folder) {
+function build(nodeName, browserName, folder) {
 	try {
 		rmdirSync(folder);
 	} catch (e) {}
 	try {
 		mkdirSync(folder);
 	} catch (e) {}
-	const codeNode = readFileSync(join(__dirname, `${functionName}.js`), "utf8");
+	const codeNode = readFileSync(join(__dirname, `${nodeName}.js`), "utf8");
 	const codeFunction = codeNode
 		.replace('"use strict";', "")
-		.replace(`module.exports.${moduleName} = ${functionName};`, "");
+		.replace(`module.exports.${nodeName} = ${nodeName};`, "");
 	const codeBrowser = `
 		"use strict";
 		(function(){
 			${codeFunction}
-			window.${functionName} = ${functionName};
+			window.${browserName} = ${nodeName};
 		})();
 	`;
 	writeMinified(codeNode, join(folder, `index.js`));
 	writeMinified(codeBrowser, join(folder, `browser.js`));
 }
 
-build("snapshotToJson", "toJSON", join(baseFolder, "lib"));
+build("toJSON", "snapshotToJSON", join(baseFolder, "lib"));
