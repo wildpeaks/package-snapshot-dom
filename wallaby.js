@@ -8,8 +8,7 @@ module.exports = () => ({
 		{pattern: "test/fixtures/**/*.*", load: false}
 	],
 	tests: [
-		"test/invalid.spec.js",
-		"test/jsdom.spec.js"
+		"test/node.spec.js"
 	],
 	env: {
 		type: "node"

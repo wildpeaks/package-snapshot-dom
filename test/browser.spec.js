@@ -52,7 +52,7 @@ function testFixture(id, skip) {
 			await sleep(300);
 			await page.addScriptTag({path: script});
 			await sleep(300);
-			actualNodes = await page.evaluate(opt => window.snapshotToJson(document.body, opt), skip);
+			actualNodes = await page.evaluate(opt => window.snapshotToJSON(document.body, opt), skip);
 		} finally {
 			await browser.close();
 		}
