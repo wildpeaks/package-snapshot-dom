@@ -13,6 +13,7 @@
 !/.prettierignore
 !/.vscode
 !/packages
+!/src
 !/test
 !/greenkeeper.json
 !/package.json

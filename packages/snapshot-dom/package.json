@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
   },
-  "main": "lib/node.js",
+  "main": "lib/index.js",
   "browser": "lib/browser.js",
   "files": [
     "lib"

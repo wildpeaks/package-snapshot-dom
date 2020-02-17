@@ -4,7 +4,7 @@ const {join} = require("path");
 const {readFileSync} = require("fs");
 const {deepStrictEqual} = require("assert");
 const {JSDOM} = require("jsdom");
-const snapshot = require("../packages/snapshot-dom/lib/node");
+const snapshot = require("../packages/snapshot-dom/lib/index");
 const fixturesFolder = join(__dirname, "fixtures");
 
 function testFixture(id, options) {
