@@ -1,0 +1,13 @@
+{
+	"tagName": "body",
+	"childNodes": [
+		{
+			"tagName": "div",
+			"attributes": {
+				"data-sorted-1": "class2 class1 class3",
+				"data-sorted-2": "  class2\t \tclass1 class3",
+				"data-unsorted": "class2 class1 class3  "
+			}
+		}
+	]
+}

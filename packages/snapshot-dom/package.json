@@ -18,6 +18,7 @@
   "browser": "lib/browser.js",
   "files": [
     "lib",
-    "removeEmptyAttributes"
+    "removeEmptyAttributes",
+    "sortAttributes"
   ]
 }

@@ -8,7 +8,6 @@ const {minify} = require("terser");
 const {rmdirSync} = require("rimraf");
 const baseFolder = join(__dirname, "../packages/snapshot-dom");
 
-
 function build(folderName, nodeName, browserName) {
 	describe(`Build "${nodeName}"`, function() {
 		const folder = join(baseFolder, folderName);
@@ -44,3 +43,4 @@ function build(folderName, nodeName, browserName) {
 
 build("lib", "toJSON", "snapshotToJSON");
 build("removeEmptyAttributes", "removeEmptyAttributes", "snapshotRemoveEmptyAttributes");
+build("sortAttributes", "sortAttributes", "snapshotSortAttributes");

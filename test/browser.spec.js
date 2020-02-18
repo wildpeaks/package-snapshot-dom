@@ -10,6 +10,7 @@ const puppeteer = require("puppeteer");
 const fixturesFolder = join(__dirname, "fixtures");
 const script1 = join(__dirname, "../packages/snapshot-dom/lib/browser.js");
 const script2 = join(__dirname, "../packages/snapshot-dom/removeEmptyAttributes/browser.js");
+const script3 = join(__dirname, "../packages/snapshot-dom/sortAttributes/browser.js");
 
 const port = 8888;
 const baseurl = `http://localhost:${port}/`;
@@ -41,7 +42,7 @@ after(function() {
 	});
 });
 
-function testFixture(id, removeEmpty = false) {
+function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	it(`Fixture: ${id}`, /* @this */ async function() {
 		this.slow(15000);
 		this.timeout(15000);
@@ -53,15 +54,19 @@ function testFixture(id, removeEmpty = false) {
 			await sleep(300);
 			await page.addScriptTag({path: script1});
 			await page.addScriptTag({path: script2});
+			await page.addScriptTag({path: script3});
 			await sleep(300);
-			actualNodes = await page.evaluate(removeEmpty_ => {
+			actualNodes = await page.evaluate((removeEmpty_, sorted_, sortNames_) => {
 				// eslint-disable-next-line no-var
 				var tree = window.snapshotToJSON(document.body);
 				if (removeEmpty_) {
 					tree = window.snapshotRemoveEmptyAttributes(tree);
 				}
+				if (sorted_) {
+					tree = window.snapshotSortAttributes(tree, sortNames_);
+				}
 				return tree;
-			}, removeEmpty);
+			}, removeEmpty, sorted, sortNames);
 		} finally {
 			await browser.close();
 		}
@@ -80,4 +85,9 @@ describe("Puppeteer", () => {
 	testFixture("duplicated_attribute_reverse_order");
 	testFixture("remove_empty_false", false);
 	testFixture("remove_empty_true", true);
+	testFixture("sort_false", false, false);
+	testFixture("sort_empty", false, true, []);
+	testFixture("sort_undefined", false, true, undefined);
+	testFixture("sort_null", false, true, null);
+	testFixture("sort_true", false, true, ["data-sorted-1", "data-sorted-2"]);
 });

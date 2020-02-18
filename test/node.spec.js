@@ -6,9 +6,10 @@ const {deepStrictEqual} = require("assert");
 const {JSDOM} = require("jsdom");
 const {toJSON} = require("../packages/snapshot-dom/lib");
 const {removeEmptyAttributes} = require("../packages/snapshot-dom/removeEmptyAttributes");
+const {sortAttributes} = require("../packages/snapshot-dom/sortAttributes");
 const fixturesFolder = join(__dirname, "fixtures");
 
-function testFixture(id, removeEmpty = false) {
+function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	it(`Fixture: ${id}`, () => {
 		const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
 		const expected = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
@@ -16,6 +17,9 @@ function testFixture(id, removeEmpty = false) {
 		let actual = toJSON(dom.window.document.body);
 		if (removeEmpty) {
 			actual = removeEmptyAttributes(actual);
+		}
+		if (sorted) {
+			actual = sortAttributes(actual, sortNames);
 		}
 		deepStrictEqual(actual, expected);
 	});
@@ -67,4 +71,9 @@ describe("JSDOM", () => {
 	testFixture("duplicated_attribute_reverse_order");
 	testFixture("remove_empty_false", false);
 	testFixture("remove_empty_true", true);
+	testFixture("sort_false", false, false);
+	testFixture("sort_empty", false, true, []);
+	testFixture("sort_undefined", false, true, undefined);
+	testFixture("sort_null", false, true, null);
+	testFixture("sort_true", false, true, ["data-sorted-1", "data-sorted-2"]);
 });
