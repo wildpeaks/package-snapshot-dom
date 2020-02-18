@@ -9,6 +9,24 @@ const {removeEmptyAttributes} = require("../packages/snapshot-dom/removeEmptyAtt
 const {sortAttributes} = require("../packages/snapshot-dom/sortAttributes");
 const fixturesFolder = join(__dirname, "fixtures");
 
+function testInvalidScript1(id, input) {
+	it(id, () => {
+		deepStrictEqual(toJSON(input), {});
+	});
+}
+
+function testInvalidScript2(id, input, expectedOutput) {
+	it(id, () => {
+		deepStrictEqual(removeEmptyAttributes(input), expectedOutput);
+	});
+}
+
+function testInvalidScript3(id, input, expectedOutput) {
+	it(id, () => {
+		deepStrictEqual(sortAttributes(input), expectedOutput);
+	});
+}
+
 function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	it(`Fixture: ${id}`, () => {
 		const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
@@ -25,55 +43,57 @@ function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	});
 }
 
-describe("Invalid", () => {
-	it("Missing element", () => {
-		deepStrictEqual(toJSON(), {});
-	});
-	it("Invalid element (0)", () => {
-		deepStrictEqual(toJSON(0), {});
-	});
-	it("Invalid element (1)", () => {
-		deepStrictEqual(toJSON(1), {});
-	});
-	it("Invalid element (false)", () => {
-		deepStrictEqual(toJSON(false), {});
-	});
-	it("Invalid element (true)", () => {
-		deepStrictEqual(toJSON(true), {});
-	});
-	it("Invalid element (null)", () => {
-		deepStrictEqual(toJSON(null), {});
-	});
-	it("Invalid element (undefined)", () => {
-		deepStrictEqual(toJSON(undefined), {});
-	});
-});
-
 describe("JSDOM", () => {
-	it("Single paragraph in detached element", () => {
-		const dom = new JSDOM("<!DOCTYPE html><html><head></head><body></body></html>");
-		const {document} = dom.window;
-		const element = document.createElement("p");
-		element.className = "test2";
-		deepStrictEqual(toJSON(element), {
-			tagName: "p",
-			attributes: {
-				class: "test2"
-			}
-		});
+	describe("toJSON", () => {
+		testInvalidScript1("undefined", undefined);
+		testInvalidScript1("0", 0);
+		testInvalidScript1("1", 1);
+		testInvalidScript1("false", false);
+		testInvalidScript1("true", true);
+		testInvalidScript1("null", null);
 	});
-	testFixture("empty_body");
-	testFixture("single_paragraph_in_body");
-	testFixture("nested_elements_in_body");
-	testFixture("text_fragment");
-	testFixture("attributes");
-	testFixture("duplicated_attribute_alphabetic_order");
-	testFixture("duplicated_attribute_reverse_order");
-	testFixture("remove_empty_false", false);
-	testFixture("remove_empty_true", true);
-	testFixture("sort_false", false, false);
-	testFixture("sort_empty", false, true, []);
-	testFixture("sort_undefined", false, true, undefined);
-	testFixture("sort_null", false, true, null);
-	testFixture("sort_true", false, true, ["data-sorted-1", "data-sorted-2"]);
+	describe("removeEmptyAttributes", () => {
+		testInvalidScript2("undefined", undefined, undefined);
+		testInvalidScript2("0", 0, 0);
+		testInvalidScript2("1", 1, 1);
+		testInvalidScript2("false", false, false);
+		testInvalidScript2("true", true, true);
+		testInvalidScript2("null", null, null);
+	});
+	describe("sortAttributes", () => {
+		testInvalidScript3("undefined", undefined, undefined);
+		testInvalidScript3("0", 0, 0);
+		testInvalidScript3("1", 1, 1);
+		testInvalidScript3("false", false, false);
+		testInvalidScript3("true", true, true);
+		testInvalidScript3("null", null, null);
+	});
+	describe("Fixtures", () => {
+		it("Single paragraph in detached element", () => {
+			const dom = new JSDOM("<!DOCTYPE html><html><head></head><body></body></html>");
+			const {document} = dom.window;
+			const element = document.createElement("p");
+			element.className = "test2";
+			deepStrictEqual(toJSON(element), {
+				tagName: "p",
+				attributes: {
+					class: "test2"
+				}
+			});
+		});
+		testFixture("empty_body");
+		testFixture("single_paragraph_in_body");
+		testFixture("nested_elements_in_body");
+		testFixture("text_fragment");
+		testFixture("attributes");
+		testFixture("duplicated_attribute_alphabetic_order");
+		testFixture("duplicated_attribute_reverse_order");
+		testFixture("remove_empty_false", false);
+		testFixture("remove_empty_true", true);
+		testFixture("sort_false", false, false);
+		testFixture("sort_empty", false, true, []);
+		testFixture("sort_undefined", false, true, undefined);
+		testFixture("sort_null", false, true, null);
+		testFixture("sort_true", false, true, ["data-sorted-1", "data-sorted-2"]);
+	});
 });
