@@ -4,43 +4,12 @@
 const {deepStrictEqual} = require("assert");
 const {readFileSync} = require("fs");
 const {join} = require("path");
-const express = require("express");
 const puppeteer = require("puppeteer");
 
 const fixturesFolder = join(__dirname, "fixtures");
 const script1 = join(__dirname, "../packages/snapshot-dom/lib/browser.js");
 const script2 = join(__dirname, "../packages/snapshot-dom/removeEmptyAttributes/browser.js");
 const script3 = join(__dirname, "../packages/snapshot-dom/sortAttributes/browser.js");
-
-const port = 8888;
-const baseurl = `http://localhost:${port}/`;
-let app;
-let server;
-
-function sleep(duration) {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			resolve();
-		}, duration);
-	});
-}
-
-before(function() {
-	return new Promise(resolve => {
-		app = express();
-		app.use(express.static(fixturesFolder));
-		server = app.listen(port, () => {
-			resolve();
-		});
-	});
-});
-after(function() {
-	return new Promise(resolve => {
-		server.close(() => {
-			resolve();
-		});
-	});
-});
 
 function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	it(`Fixture: ${id}`, /* @this */ async function() {
@@ -50,23 +19,27 @@ function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 		const browser = await puppeteer.launch();
 		try {
 			const page = await browser.newPage();
-			await page.goto(`${baseurl}${id}.html`, {waitUntil: "load"});
-			await sleep(300);
+			const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
+			await page.setContent(html, {waitUntil: "load"});
 			await page.addScriptTag({path: script1});
 			await page.addScriptTag({path: script2});
 			await page.addScriptTag({path: script3});
-			await sleep(300);
-			actualNodes = await page.evaluate((removeEmpty_, sorted_, sortNames_) => {
-				// eslint-disable-next-line no-var
-				var tree = window.snapshotToJSON(document.body);
-				if (removeEmpty_) {
-					tree = window.snapshotRemoveEmptyAttributes(tree);
-				}
-				if (sorted_) {
-					tree = window.snapshotSortAttributes(tree, sortNames_);
-				}
-				return tree;
-			}, removeEmpty, sorted, sortNames);
+			actualNodes = await page.evaluate(
+				(removeEmpty_, sorted_, sortNames_) => {
+					// eslint-disable-next-line no-var
+					var tree = window.snapshotToJSON(document.body);
+					if (removeEmpty_) {
+						tree = window.snapshotRemoveEmptyAttributes(tree);
+					}
+					if (sorted_) {
+						tree = window.snapshotSortAttributes(tree, sortNames_);
+					}
+					return tree;
+				},
+				removeEmpty,
+				sorted,
+				sortNames
+			);
 		} finally {
 			await browser.close();
 		}
