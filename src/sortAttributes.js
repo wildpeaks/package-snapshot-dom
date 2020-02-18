@@ -6,7 +6,7 @@ function sortAttributeValue(value) {
 }
 
 function sortAttributes(obj, attributeIds) {
-	if (Array.isArray(attributeIds)) {
+	if (typeof obj === "object" && obj !== null && Array.isArray(attributeIds)) {
 		if (Array.isArray(obj.childNodes)) {
 			obj.childNodes = obj.childNodes.map(child => sortAttributes(child, attributeIds));
 		}
