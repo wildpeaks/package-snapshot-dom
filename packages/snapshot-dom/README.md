@@ -113,8 +113,8 @@ try {
   await page.addScriptTag({path: script1});
   await page.addScriptTag({path: script2});
   snapshot = await page.evaluate(() => {
-    let snapshot_ = window.snapshotToJSON(document.body);
-    snapshot_ = window.snapshotRemoveEmptyAttributes(snapshot_);
+    const snapshot_ = window.snapshotToJSON(document.body);
+    window.snapshotRemoveEmptyAttributes(snapshot_);
     return snapshot_;
   });
 } finally {
@@ -175,8 +175,8 @@ try {
   await page.addScriptTag({path: script1});
   await page.addScriptTag({path: script2});
   snapshot = await page.evaluate(() => {
-    let snapshot_ = window.snapshotToJSON(document.body);
-    snapshot_ = window.snapshotSortAttributes(snapshot_, ["data-param1"]);
+    const snapshot_ = window.snapshotToJSON(document.body);
+    window.snapshotSortAttributes(snapshot_, ["data-param1"]);
     return snapshot_;
   });
 } finally {
