@@ -33,12 +33,12 @@ const html = `<article class="class1 class2"><p>Hello</p><p>World</p></article>`
 let snapshot;
 const browser = await puppeteer.launch();
 try {
-	const page = await browser.newPage();
-	await page.setContent(`<!DOCTYPE html><html><head></head><body>${html}</body></html>`, {waitUntil: "load"});
-	await page.addScriptTag({path: script});
-	snapshot = await page.evaluate(() => window.snapshotToJSON(document.body));
+  const page = await browser.newPage();
+  await page.setContent(`<!DOCTYPE html><html><head></head><body>${html}</body></html>`, {waitUntil: "load"});
+  await page.addScriptTag({path: script});
+  snapshot = await page.evaluate(() => window.snapshotToJSON(document.body));
 } finally {
-	await browser.close();
+  await browser.close();
 }
 ````
 
@@ -46,35 +46,35 @@ try {
 In both examples, `snapshot` contains:
 ````
 {
-	tagName: "body",
-	childNodes: [
-		{
-			tagName: "article",
-			attributes: {
-				class: "class1 class2"
-			},
-			childNodes: [
-				{
-					tagName: "p",
-					childNodes: [
-						{
-							nodeName: "#text",
-							nodeValue: "Hello"
-						}
-					]
-				},
-				{
-					tagName: "p",
-					childNodes: [
-						{
-							nodeName: "#text",
-							nodeValue: "World"
-						}
-					]
-				}
-			]
-		}
-	]
+  tagName: "body",
+  childNodes: [
+    {
+      tagName: "article",
+      attributes: {
+        class: "class1 class2"
+      },
+      childNodes: [
+        {
+          tagName: "p",
+          childNodes: [
+            {
+              nodeName: "#text",
+              nodeValue: "Hello"
+            }
+          ]
+        },
+        {
+          tagName: "p",
+          childNodes: [
+            {
+              nodeName: "#text",
+              nodeValue: "World"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 ````
 
@@ -108,17 +108,17 @@ const html = `<img param1 param2="" param3="hello" />`;
 let snapshot;
 const browser = await puppeteer.launch();
 try {
-	const page = await browser.newPage();
-	await page.setContent(`<!DOCTYPE html><html><head></head><body>${html}</body></html>`, {waitUntil: "load"});
-	await page.addScriptTag({path: script1});
-	await page.addScriptTag({path: script2});
-	snapshot = await page.evaluate(() => {
-		let snapshot_ = window.snapshotToJSON(document.body);
-		snapshot_ = window.snapshotRemoveEmptyAttributes(snapshot_);
-		return snapshot_;
-	});
+  const page = await browser.newPage();
+  await page.setContent(`<!DOCTYPE html><html><head></head><body>${html}</body></html>`, {waitUntil: "load"});
+  await page.addScriptTag({path: script1});
+  await page.addScriptTag({path: script2});
+  snapshot = await page.evaluate(() => {
+    let snapshot_ = window.snapshotToJSON(document.body);
+    snapshot_ = window.snapshotRemoveEmptyAttributes(snapshot_);
+    return snapshot_;
+  });
 } finally {
-	await browser.close();
+  await browser.close();
 }
 ````
 
@@ -126,15 +126,15 @@ try {
 In both examples, `snapshot` contains:
 ````
 {
-	tagName: "body",
-	childNodes: [
-		{
-			tagName: "img",
-			attributes: {
-				param3: "hello"
-			}
-		}
-	]
+  tagName: "body",
+  childNodes: [
+    {
+      tagName: "img",
+      attributes: {
+        param3: "hello"
+      }
+    }
+  ]
 }
 ````
 
@@ -170,17 +170,17 @@ const html = `<article data-param1="sorted2 sorted1 sorted3" data-param2="unsort
 let snapshot;
 const browser = await puppeteer.launch();
 try {
-	const page = await browser.newPage();
-	await page.setContent(`<!DOCTYPE html><html><head></head><body>${html}</body></html>`, {waitUntil: "load"});
-	await page.addScriptTag({path: script1});
-	await page.addScriptTag({path: script2});
-	snapshot = await page.evaluate(() => {
-		let snapshot_ = window.snapshotToJSON(document.body);
-		snapshot_ = window.snapshotSortAttributes(snapshot_, ["data-param1"]);
-		return snapshot_;
-	});
+  const page = await browser.newPage();
+  await page.setContent(`<!DOCTYPE html><html><head></head><body>${html}</body></html>`, {waitUntil: "load"});
+  await page.addScriptTag({path: script1});
+  await page.addScriptTag({path: script2});
+  snapshot = await page.evaluate(() => {
+    let snapshot_ = window.snapshotToJSON(document.body);
+    snapshot_ = window.snapshotSortAttributes(snapshot_, ["data-param1"]);
+    return snapshot_;
+  });
 } finally {
-	await browser.close();
+  await browser.close();
 }
 ````
 
@@ -188,16 +188,16 @@ try {
 In both examples, `snapshot` contains:
 ````
 {
-	tagName: "body",
-	childNodes: [
-		{
-			tagName: "article",
-			attributes: {
-				"data-param1": "sorted1 sorted2 sorted3",
-				"data-param2": "unsorted2 unsorted1 unsorted3"
-			}
-		}
-	]
+  tagName: "body",
+  childNodes: [
+    {
+      tagName: "article",
+      attributes: {
+        "data-param1": "sorted1 sorted2 sorted3",
+        "data-param2": "unsorted2 unsorted1 unsorted3"
+      }
+    }
+  ]
 }
 ````
 
