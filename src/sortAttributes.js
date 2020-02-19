@@ -5,20 +5,19 @@ function sortAttributeValue(value) {
 	return (typeof value === "string") ? value.trim().replace(/[\s]+/g, " ").split(" ").sort().join(" ") : value;
 }
 
-function sortAttributes(obj, attributeIds) {
-	if (typeof obj === "object" && obj !== null && Array.isArray(attributeIds)) {
-		if (Array.isArray(obj.childNodes)) {
-			obj.childNodes = obj.childNodes.map(child => sortAttributes(child, attributeIds));
+function sortAttributes(tree, attributeIds) {
+	if (typeof tree === "object" && tree !== null && Array.isArray(attributeIds)) {
+		if (Array.isArray(tree.childNodes)) {
+			tree.childNodes.forEach(child => sortAttributes(child, attributeIds));
 		}
-		if (obj && obj.attributes) {
-			for (const key in obj.attributes) {
+		if (tree && tree.attributes) {
+			for (const key in tree.attributes) {
 				if (attributeIds.includes(key)) {
-					obj.attributes[key] = sortAttributeValue(obj.attributes[key]);
+					tree.attributes[key] = sortAttributeValue(tree.attributes[key]);
 				}
 			}
 		}
 	}
-	return obj;
 }
 
 module.exports.sortAttributes = sortAttributes;

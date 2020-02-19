@@ -1,22 +1,21 @@
 /* eslint-env shared-node-browser */
 "use strict";
 
-function removeEmptyAttributes(obj) {
-	if (typeof obj === "object" && obj !== null) {
-		if (Array.isArray(obj.childNodes)) {
-			obj.childNodes = obj.childNodes.map(removeEmptyAttributes);
+function removeEmptyAttributes(tree) {
+	if (typeof tree === "object" && tree !== null) {
+		if (Array.isArray(tree.childNodes)) {
+			tree.childNodes.forEach(removeEmptyAttributes);
 		}
-		if (obj && obj.attributes) {
+		if (tree.attributes) {
 			const removeKeys = [];
-			for (const key in obj.attributes) {
-				if (!obj.attributes[key]) {
+			for (const key in tree.attributes) {
+				if (!tree.attributes[key]) {
 					removeKeys.push(key);
 				}
 			}
-			removeKeys.forEach(key => delete obj.attributes[key]);
+			removeKeys.forEach(key => delete tree.attributes[key]);
 		}
 	}
-	return obj;
 }
 
 module.exports.removeEmptyAttributes = removeEmptyAttributes;

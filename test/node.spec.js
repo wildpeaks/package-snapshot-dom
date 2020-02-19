@@ -17,13 +17,15 @@ function testInvalidScript1(id, input) {
 
 function testInvalidScript2(id, input, expectedOutput) {
 	it(id, () => {
-		deepStrictEqual(removeEmptyAttributes(input), expectedOutput);
+		removeEmptyAttributes(input);
+		deepStrictEqual(input, expectedOutput);
 	});
 }
 
 function testInvalidScript3(id, input, expectedOutput) {
 	it(id, () => {
-		deepStrictEqual(sortAttributes(input), expectedOutput);
+		sortAttributes(input);
+		deepStrictEqual(input, expectedOutput);
 	});
 }
 
@@ -32,12 +34,12 @@ function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 		const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
 		const expected = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
 		const dom = new JSDOM(html);
-		let actual = toJSON(dom.window.document.body);
+		const actual = toJSON(dom.window.document.body);
 		if (removeEmpty) {
-			actual = removeEmptyAttributes(actual);
+			removeEmptyAttributes(actual);
 		}
 		if (sorted) {
-			actual = sortAttributes(actual, sortNames);
+			sortAttributes(actual, sortNames);
 		}
 		deepStrictEqual(actual, expected);
 	});

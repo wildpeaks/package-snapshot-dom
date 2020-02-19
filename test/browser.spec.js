@@ -12,93 +12,110 @@ const script2 = join(__dirname, "../packages/snapshot-dom/removeEmptyAttributes/
 const script3 = join(__dirname, "../packages/snapshot-dom/sortAttributes/browser.js");
 
 function testInvalidScript1(id, input) {
-	it(id, /* @this */ async function() {
-		this.slow(5000);
-		this.timeout(5000);
-		let actualNodes;
-		const browser = await puppeteer.launch();
-		try {
-			const page = await browser.newPage();
-			await page.addScriptTag({path: script1});
-			actualNodes = await page.evaluate(input_ => window.snapshotToJSON(input_), input);
-		} finally {
-			await browser.close();
+	it(
+		id,
+		/* @this */ async function() {
+			this.slow(5000);
+			this.timeout(5000);
+			let actualNodes;
+			const browser = await puppeteer.launch();
+			try {
+				const page = await browser.newPage();
+				await page.addScriptTag({path: script1});
+				actualNodes = await page.evaluate(input_ => window.snapshotToJSON(input_), input);
+			} finally {
+				await browser.close();
+			}
+			deepStrictEqual(actualNodes, {});
 		}
-		deepStrictEqual(actualNodes, {});
-	});
+	);
 }
 
 function testInvalidScript2(id, input, expectedOutput) {
-	it(id, /* @this */ async function() {
-		this.slow(5000);
-		this.timeout(5000);
-		let actualNodes;
-		const browser = await puppeteer.launch();
-		try {
-			const page = await browser.newPage();
-			await page.addScriptTag({path: script2});
-			actualNodes = await page.evaluate(input_ => window.snapshotRemoveEmptyAttributes(input_), input);
-		} finally {
-			await browser.close();
+	it(
+		id,
+		/* @this */ async function() {
+			this.slow(5000);
+			this.timeout(5000);
+			let actualNodes;
+			const browser = await puppeteer.launch();
+			try {
+				const page = await browser.newPage();
+				await page.addScriptTag({path: script2});
+				actualNodes = await page.evaluate(input_ => {
+					window.snapshotRemoveEmptyAttributes(input_);
+					return input_;
+				}, input);
+			} finally {
+				await browser.close();
+			}
+			deepStrictEqual(actualNodes, expectedOutput);
 		}
-		deepStrictEqual(actualNodes, expectedOutput);
-	});
+	);
 }
 
 function testInvalidScript3(id, input, expectedOutput) {
-	it(id, /* @this */ async function() {
-		this.slow(5000);
-		this.timeout(5000);
-		let actualNodes;
-		const browser = await puppeteer.launch();
-		try {
-			const page = await browser.newPage();
-			await page.addScriptTag({path: script3});
-			actualNodes = await page.evaluate(input_ => window.snapshotSortAttributes(input_), input);
-		} finally {
-			await browser.close();
+	it(
+		id,
+		/* @this */ async function() {
+			this.slow(5000);
+			this.timeout(5000);
+			let actualNodes;
+			const browser = await puppeteer.launch();
+			try {
+				const page = await browser.newPage();
+				await page.addScriptTag({path: script3});
+				actualNodes = await page.evaluate(input_ => {
+					window.snapshotSortAttributes(input_);
+					return input_;
+				}, input);
+			} finally {
+				await browser.close();
+			}
+			deepStrictEqual(actualNodes, expectedOutput);
 		}
-		deepStrictEqual(actualNodes, expectedOutput);
-	});
+	);
 }
 
 function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
-	it(id, /* @this */ async function() {
-		this.slow(5000);
-		this.timeout(5000);
-		let actualNodes;
-		const browser = await puppeteer.launch();
-		try {
-			const page = await browser.newPage();
-			const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
-			await page.setContent(html, {waitUntil: "load"});
-			await page.addScriptTag({path: script1});
-			await page.addScriptTag({path: script2});
-			await page.addScriptTag({path: script3});
-			actualNodes = await page.evaluate(
-				(removeEmpty_, sorted_, sortNames_) => {
-					// eslint-disable-next-line no-var
-					var tree = window.snapshotToJSON(document.body);
-					if (removeEmpty_) {
-						tree = window.snapshotRemoveEmptyAttributes(tree);
-					}
-					if (sorted_) {
-						tree = window.snapshotSortAttributes(tree, sortNames_);
-					}
-					return tree;
-				},
-				removeEmpty,
-				sorted,
-				sortNames
-			);
-		} finally {
-			await browser.close();
+	it(
+		id,
+		/* @this */ async function() {
+			this.slow(5000);
+			this.timeout(5000);
+			let actualNodes;
+			const browser = await puppeteer.launch();
+			try {
+				const page = await browser.newPage();
+				const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
+				await page.setContent(html, {waitUntil: "load"});
+				await page.addScriptTag({path: script1});
+				await page.addScriptTag({path: script2});
+				await page.addScriptTag({path: script3});
+				actualNodes = await page.evaluate(
+					(removeEmpty_, sorted_, sortNames_) => {
+						// eslint-disable-next-line no-var
+						var tree = window.snapshotToJSON(document.body);
+						if (removeEmpty_) {
+							window.snapshotRemoveEmptyAttributes(tree);
+						}
+						if (sorted_) {
+							window.snapshotSortAttributes(tree, sortNames_);
+						}
+						return tree;
+					},
+					removeEmpty,
+					sorted,
+					sortNames
+				);
+			} finally {
+				await browser.close();
+			}
+			const expectedNodes = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
+			deepStrictEqual(actualNodes, expectedNodes);
 		}
-		const expectedNodes = JSON.parse(readFileSync(join(fixturesFolder, `${id}.json`), "utf8"));
-		deepStrictEqual(actualNodes, expectedNodes);
-	});
+	);
 }
-
 
 describe("Puppeteer", () => {
 	describe("window.snapshotToJSON", () => {
