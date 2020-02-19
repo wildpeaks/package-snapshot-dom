@@ -1,0 +1,24 @@
+{
+  "name": "@wildpeaks/snapshot-dom",
+  "version": "2.0.0",
+  "description": "Converts a DOM element to a JSON tree",
+  "author": "Cecile Muller",
+  "license": "MIT",
+  "keywords": [
+    "wildpeaks",
+    "assert",
+    "dom"
+  ],
+  "homepage": "https://github.com/wildpeaks/package-snapshot-dom/tree/master/packages/snapshot-dom#readme",
+  "repository": "https://github.com/wildpeaks/package-snapshot-dom",
+  "bugs": {
+    "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
+  },
+  "main": "lib/index.js",
+  "browser": "lib/browser.js",
+  "files": [
+    "lib",
+    "removeEmptyAttributes",
+    "sortAttributes"
+  ]
+}

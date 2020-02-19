@@ -1,22 +1,9 @@
 "use strict";
 
-/**
- * @typedef {Object} Options
- * @property {Boolean} skipEmptyValue - Skips node values that evaluate to false (undefined and zero-length strings)
- */
-
-/**
- * Convert a DOM element to a simpler JSON tree.
- * @param  {Node} node
- * @param  {Options} options
- * @return {Object}
- */
-function toJSON(node, options = {}) {
+function toJSON(node) {
 	const serialized = {};
 	const isValid = typeof node === "object" && node !== null;
 	if (isValid) {
-		// https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType#Node_type_constants
-		// serialized.nodeType = node.nodeType;
 		if (node.tagName) {
 			serialized.tagName = node.tagName.toLowerCase();
 		} else if (node.nodeName) {
@@ -33,10 +20,7 @@ function toJSON(node, options = {}) {
 				const aggregated = {};
 				for (let i = 0; i < l; i++) {
 					const attr = attrs[i];
-					const skip = options.skipEmptyValue && !attr.nodeValue;
-					if (!skip) {
-						aggregated[attr.nodeName] = attr.nodeValue;
-					}
+					aggregated[attr.nodeName] = attr.nodeValue;
 				}
 				serialized.attributes = aggregated;
 			}
@@ -48,7 +32,7 @@ function toJSON(node, options = {}) {
 			if (l > 0) {
 				const aggregated = new Array(l);
 				for (let i = 0; i < l; i++) {
-					aggregated[i] = toJSON(childNodes[i], options);
+					aggregated[i] = toJSON(childNodes[i]);
 				}
 				serialized.childNodes = aggregated;
 			}

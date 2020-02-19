@@ -1,22 +1,11 @@
 {
-  "name": "@wildpeaks/snapshot-dom",
-  "version": "2.0.0-rc1",
-  "description": "Converts a DOM element to a JSON tree",
-  "author": "Cecile Muller",
-  "license": "MIT",
-  "keywords": [
-    "wildpeaks",
-    "assert",
-    "dom"
-  ],
-  "homepage": "https://github.com/wildpeaks/package-snapshot-dom#readme",
-  "repository": "https://github.com/wildpeaks/package-snapshot-dom",
-  "bugs": {
-    "url": "https://github.com/wildpeaks/package-snapshot-dom/issues"
-  },
+  "private": true,
   "eslintConfig": {
     "extends": "@wildpeaks/commonjs"
   },
+  "eslintIgnore": [
+    "packages"
+  ],
   "prettier": {
     "printWidth": 120,
     "tabWidth": 4,
@@ -29,22 +18,18 @@
       "devDependencyUpdate": "chore: update ${dependency}"
     }
   },
-  "main": "src/snapshot.js",
-  "files": [
-    "src",
-    "lib"
-  ],
   "scripts": {
-    "lint": "eslint ./src/**/*.js",
+    "build": "mocha src/build.js",
     "test": "mocha test/*.spec.js"
   },
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "8.1.0",
     "eslint": "6.8.0",
-    "express": "4.17.1",
     "jsdom": "16.1.0",
     "mocha": "7.0.1",
     "prettier": "1.19.1",
-    "puppeteer": "2.1.1"
+    "puppeteer": "2.1.1",
+    "rimraf": "3.0.2",
+    "terser": "4.6.3"
   }
 }

@@ -4,11 +4,11 @@ module.exports = () => ({
 	debug: true,
 	testFramework: "mocha",
 	files: [
-		"package.json",
-		"src/**/*.js"
+		"packages/**/index.js",
+		{pattern: "test/fixtures/**/*.*", load: false}
 	],
 	tests: [
-		"test/*.spec.js"
+		"test/node.spec.js"
 	],
 	env: {
 		type: "node"

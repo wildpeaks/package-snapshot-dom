@@ -12,9 +12,10 @@
 !/.npmrc
 !/.prettierignore
 !/.vscode
+!/packages
 !/src
-!/lib
 !/test
+!/greenkeeper.json
 !/package.json
 !/azure-pipelines.yml
 !/wallaby.js
