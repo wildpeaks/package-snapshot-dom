@@ -1,5 +1,7 @@
 # Snapshot
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/wildpeaks/package-snapshot-dom.svg)](https://greenkeeper.io/)
+
 **Converts an HTMLElement to a JSON tree, useful for automated DOM tests.**
 
 Install:
