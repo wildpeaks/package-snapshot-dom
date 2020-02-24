@@ -30,6 +30,6 @@
     "prettier": "1.19.1",
     "puppeteer": "2.1.1",
     "rimraf": "3.0.2",
-    "terser": "4.6.3"
+    "terser": "4.6.4"
   }
 }
