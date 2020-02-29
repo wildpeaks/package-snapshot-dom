@@ -23,7 +23,7 @@
     "test": "mocha test/*.spec.js"
   },
   "devDependencies": {
-    "@wildpeaks/eslint-config-commonjs": "8.2.0",
+    "@wildpeaks/eslint-config-commonjs": "8.3.0",
     "eslint": "6.8.0",
     "jsdom": "16.2.0",
     "mocha": "7.1.0",
