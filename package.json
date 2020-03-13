@@ -25,11 +25,11 @@
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "8.3.0",
     "eslint": "6.8.0",
-    "jsdom": "16.2.0",
+    "jsdom": "16.2.1",
     "mocha": "7.1.0",
     "prettier": "1.19.1",
     "puppeteer": "2.1.1",
     "rimraf": "3.0.2",
-    "terser": "4.6.5"
+    "terser": "4.6.6"
   }
 }
