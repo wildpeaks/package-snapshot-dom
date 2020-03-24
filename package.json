@@ -10,7 +10,8 @@
     "printWidth": 120,
     "tabWidth": 4,
     "useTabs": true,
-    "bracketSpacing": false
+    "bracketSpacing": false,
+    "trailingComma": "none"
   },
   "greenkeeper": {
     "commitMessages": {
