@@ -9,10 +9,10 @@ const {rmdirSync} = require("rimraf");
 const baseFolder = join(__dirname, "../packages/snapshot-dom");
 
 function build(folderName, nodeName, browserName) {
-	describe(`Build "${nodeName}"`, function() {
+	describe(`Build "${nodeName}"`, function () {
 		const folder = join(baseFolder, folderName);
 		const codeNode = readFileSync(join(__dirname, `${nodeName}.js`), "utf8");
-		before("Reset", function() {
+		before("Reset", function () {
 			try {
 				rmdirSync(folder);
 			} catch (e) {}
@@ -20,11 +20,11 @@ function build(folderName, nodeName, browserName) {
 				mkdirSync(folder);
 			} catch (e) {}
 		});
-		it("Node", function() {
+		it("Node", function () {
 			const minified = minify(codeNode);
 			writeFileSync(join(folder, `index.js`), minified.code, "utf8");
 		});
-		it("Browser", function() {
+		it("Browser", function () {
 			const codeFunction = codeNode
 				.replace('"use strict";', "")
 				.replace(`module.exports.${nodeName} = ${nodeName};`, "");

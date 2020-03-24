@@ -13,7 +13,7 @@ function removeEmptyAttributes(tree) {
 					removeKeys.push(key);
 				}
 			}
-			removeKeys.forEach(key => delete tree.attributes[key]);
+			removeKeys.forEach((key) => delete tree.attributes[key]);
 		}
 	}
 }
