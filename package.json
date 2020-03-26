@@ -13,12 +13,6 @@
     "bracketSpacing": false,
     "trailingComma": "none"
   },
-  "greenkeeper": {
-    "commitMessages": {
-      "dependencyUpdate": "feat: update ${dependency}",
-      "devDependencyUpdate": "chore: update ${dependency}"
-    }
-  },
   "scripts": {
     "build": "mocha src/build.js",
     "test": "mocha test/*.spec.js"
