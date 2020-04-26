@@ -18,7 +18,7 @@
     "test": "mocha test/*.spec.js"
   },
   "dependencies": {
-    "mocha": "7.1.1",
+    "mocha": "7.1.2",
     "rimraf": "3.0.2",
     "terser": "4.6.12"
   },
