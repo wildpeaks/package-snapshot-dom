@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "9.3.0",
-    "eslint": "6.8.0",
+    "eslint": "7.0.0",
     "jsdom": "16.2.2",
     "prettier": "2.0.5",
     "puppeteer": "2.1.1"
