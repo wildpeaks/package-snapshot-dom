@@ -20,7 +20,7 @@
   "dependencies": {
     "mocha": "7.1.2",
     "rimraf": "3.0.2",
-    "terser": "4.6.13"
+    "terser": "4.7.0"
   },
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "10.0.0",
