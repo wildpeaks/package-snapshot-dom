@@ -15,9 +15,7 @@
 !/packages
 !/src
 !/test
-!/greenkeeper.json
 !/package.json
-!/azure-pipelines.yml
 !/wallaby.js
 
 # But make sure to ignore these regardless:
