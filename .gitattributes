@@ -3,7 +3,6 @@
 .editorconfig   text
 .gitattributes  text
 .gitignore      text
-.gitattributes  text
 LICENSE         text
 README          text
 *.txt           text
