@@ -4,7 +4,7 @@
 const {deepStrictEqual} = require("assert");
 const {readFileSync} = require("fs");
 const {join} = require("path");
-const puppeteer = require("puppeteer");
+const {chromium} = require("playwright");
 
 const fixturesFolder = join(__dirname, "fixtures");
 const script1 = join(__dirname, "../packages/snapshot-dom/lib/browser.js");
@@ -14,15 +14,16 @@ const script3 = join(__dirname, "../packages/snapshot-dom/sortAttributes/browser
 function testInvalidScript1(id, input) {
 	it(
 		id,
-		/* @this */ async function() {
+		/* @this */ async function () {
 			this.slow(5000);
 			this.timeout(5000);
 			let actualNodes;
-			const browser = await puppeteer.launch();
+			const browser = await chromium.launch();
 			try {
-				const page = await browser.newPage();
+				const ctx = await browser.newContext();
+				const page = await ctx.newPage();
 				await page.addScriptTag({path: script1});
-				actualNodes = await page.evaluate(input_ => window.snapshotToJSON(input_), input);
+				actualNodes = await page.evaluate((input_) => window.snapshotToJSON(input_), input);
 			} finally {
 				await browser.close();
 			}
@@ -34,15 +35,16 @@ function testInvalidScript1(id, input) {
 function testInvalidScript2(id, input, expectedOutput) {
 	it(
 		id,
-		/* @this */ async function() {
+		/* @this */ async function () {
 			this.slow(5000);
 			this.timeout(5000);
 			let actualNodes;
-			const browser = await puppeteer.launch();
+			const browser = await chromium.launch();
 			try {
-				const page = await browser.newPage();
+				const ctx = await browser.newContext();
+				const page = await ctx.newPage();
 				await page.addScriptTag({path: script2});
-				actualNodes = await page.evaluate(input_ => {
+				actualNodes = await page.evaluate((input_) => {
 					window.snapshotRemoveEmptyAttributes(input_);
 					return input_;
 				}, input);
@@ -57,15 +59,16 @@ function testInvalidScript2(id, input, expectedOutput) {
 function testInvalidScript3(id, input, expectedOutput) {
 	it(
 		id,
-		/* @this */ async function() {
+		/* @this */ async function () {
 			this.slow(5000);
 			this.timeout(5000);
 			let actualNodes;
-			const browser = await puppeteer.launch();
+			const browser = await chromium.launch();
 			try {
-				const page = await browser.newPage();
+				const ctx = await browser.newContext();
+				const page = await ctx.newPage();
 				await page.addScriptTag({path: script3});
-				actualNodes = await page.evaluate(input_ => {
+				actualNodes = await page.evaluate((input_) => {
 					window.snapshotSortAttributes(input_);
 					return input_;
 				}, input);
@@ -80,33 +83,32 @@ function testInvalidScript3(id, input, expectedOutput) {
 function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	it(
 		id,
-		/* @this */ async function() {
+		/* @this */ async function () {
 			this.slow(5000);
 			this.timeout(5000);
 			let actualNodes;
-			const browser = await puppeteer.launch();
+			const browser = await chromium.launch();
 			try {
-				const page = await browser.newPage();
+				const ctx = await browser.newContext();
+				const page = await ctx.newPage();
 				const html = readFileSync(join(fixturesFolder, `${id}.html`), "utf8");
 				await page.setContent(html, {waitUntil: "load"});
 				await page.addScriptTag({path: script1});
 				await page.addScriptTag({path: script2});
 				await page.addScriptTag({path: script3});
 				actualNodes = await page.evaluate(
-					(removeEmpty_, sorted_, sortNames_) => {
+					(arg) => {
 						// eslint-disable-next-line no-var
 						var tree = window.snapshotToJSON(document.body);
-						if (removeEmpty_) {
+						if (arg.removeEmpty) {
 							window.snapshotRemoveEmptyAttributes(tree);
 						}
-						if (sorted_) {
-							window.snapshotSortAttributes(tree, sortNames_);
+						if (arg.sorted) {
+							window.snapshotSortAttributes(tree, arg.sortNames);
 						}
 						return tree;
 					},
-					removeEmpty,
-					sorted,
-					sortNames
+					{removeEmpty, sorted, sortNames}
 				);
 			} finally {
 				await browser.close();
@@ -117,7 +119,7 @@ function testFixture(id, removeEmpty = false, sorted = false, sortNames) {
 	);
 }
 
-describe("Puppeteer", () => {
+describe("Chromium", () => {
 	describe("window.snapshotToJSON", () => {
 		testInvalidScript1("undefined", undefined);
 		testInvalidScript1("0", 0);

@@ -1,11 +1,12 @@
 {
+	"mochaExplorer.files": "test/**/*.test.js",
 	"eslint.validate": [
 		"javascript"
 	],
 	"files.exclude": {
 		"LICENSE": true,
 		"*.lnk": true,
-		"*.log": true,
+		"*.url": true,
 		".npmrc": true,
 		".editorconfig": true,
 		"package-lock.json": true,

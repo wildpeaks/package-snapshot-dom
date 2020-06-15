@@ -15,10 +15,10 @@
   },
   "scripts": {
     "build": "mocha src/build.js",
-    "test": "mocha test/*.spec.js"
+    "test": "mocha test/*.test.js"
   },
   "dependencies": {
-    "mocha": "7.2.0",
+    "mocha": "8.0.1",
     "rimraf": "3.0.2",
     "terser": "4.7.0"
   },
@@ -26,7 +26,7 @@
     "@wildpeaks/eslint-config-commonjs": "10.4.0",
     "eslint": "7.2.0",
     "jsdom": "16.2.2",
-    "prettier": "2.0.5",
-    "puppeteer": "3.3.0"
+    "playwright": "1.1.1",
+    "prettier": "2.0.5"
   }
 }
