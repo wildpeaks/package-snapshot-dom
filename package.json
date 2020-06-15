@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "mocha src/build.js",
-    "test": "mocha test/*.spec.js"
+    "test": "mocha test/*.test.js"
   },
   "dependencies": {
     "mocha": "8.0.1",
