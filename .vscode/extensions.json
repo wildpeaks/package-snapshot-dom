@@ -2,6 +2,8 @@
 	"recommendations": [
 		"EditorConfig.editorconfig",
 		"dbaeumer.vscode-eslint",
-		"WallabyJs.wallaby-vscode"
+		"WallabyJs.wallaby-vscode",
+		"hbenl.vscode-test-explorer",
+		"hbenl.vscode-mocha-test-adapter"
 	]
 }
