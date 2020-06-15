@@ -1,3 +1,4 @@
+*.yml
 package.json
 /packages
 /test/fixtures

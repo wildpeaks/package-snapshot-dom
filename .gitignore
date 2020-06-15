@@ -16,7 +16,6 @@
 !/src
 !/test
 !/package.json
-!/wallaby.js
 
 # But make sure to ignore these regardless:
-WAS *
+OLD *
