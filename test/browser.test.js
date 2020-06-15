@@ -59,7 +59,7 @@ function testInvalidScript2(id, input, expectedOutput) {
 function testInvalidScript3(id, input, expectedOutput) {
 	it(
 		id,
-		/* @this */ async function() {
+		/* @this */ async function () {
 			this.slow(5000);
 			this.timeout(5000);
 			let actualNodes;
