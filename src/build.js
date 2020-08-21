@@ -2,6 +2,7 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-empty */
 "use strict";
+const {strictEqual} = require("assert");
 const {mkdirSync, readFileSync, writeFileSync} = require("fs");
 const {join} = require("path");
 const {minify} = require("terser");
@@ -22,6 +23,7 @@ function build(folderName, nodeName, browserName) {
 		});
 		it("Node", function () {
 			const minified = minify(codeNode);
+			strictEqual(typeof minified.code, "string", "minified code is a string");
 			writeFileSync(join(folder, `index.js`), minified.code, "utf8");
 		});
 		it("Browser", function () {
@@ -36,6 +38,7 @@ function build(folderName, nodeName, browserName) {
 				})();
 			`;
 			const minified = minify(codeBrowser);
+			strictEqual(typeof minified.code, "string", "minified code is a string");
 			writeFileSync(join(folder, `browser.js`), minified.code, "utf8");
 		});
 	});
