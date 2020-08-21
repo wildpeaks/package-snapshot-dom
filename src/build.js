@@ -21,12 +21,12 @@ function build(folderName, nodeName, browserName) {
 				mkdirSync(folder);
 			} catch (e) {}
 		});
-		it("Node", function () {
-			const minified = minify(codeNode);
+		it("Node", async function () {
+			const minified = await minify(codeNode);
 			strictEqual(typeof minified.code, "string", "minified code is a string");
 			writeFileSync(join(folder, `index.js`), minified.code, "utf8");
 		});
-		it("Browser", function () {
+		it("Browser", async function () {
 			const codeFunction = codeNode
 				.replace('"use strict";', "")
 				.replace(`module.exports.${nodeName} = ${nodeName};`, "");
@@ -37,7 +37,7 @@ function build(folderName, nodeName, browserName) {
 					window.${browserName} = ${nodeName};
 				})();
 			`;
-			const minified = minify(codeBrowser);
+			const minified = await minify(codeBrowser);
 			strictEqual(typeof minified.code, "string", "minified code is a string");
 			writeFileSync(join(folder, `browser.js`), minified.code, "utf8");
 		});
