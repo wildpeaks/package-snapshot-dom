@@ -27,6 +27,6 @@
     "eslint": "7.9.0",
     "jsdom": "16.4.0",
     "playwright": "1.4.0",
-    "prettier": "2.1.1"
+    "prettier": "2.1.2"
   }
 }
