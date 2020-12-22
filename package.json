@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "10.7.0",
-    "eslint": "7.15.0",
+    "eslint": "7.16.0",
     "jsdom": "16.4.0",
     "playwright": "1.7.0",
     "prettier": "2.2.1"
