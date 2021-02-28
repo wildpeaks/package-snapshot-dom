@@ -1,23 +1,25 @@
-name: Tests
+name: Test
 on:
   push:
     branches:
-    - "**"
+    - main
+    - features/**
+    - dependabot/**
   pull_request:
     branches:
-    - master
+    - main
 jobs:
-  tests:
+  test:
     strategy:
       matrix:
         node: [14.x, 15.x]
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v2.3.4
+    - uses: actions/setup-node@v2.1.5
       with:
         node-version: ${{ matrix.node }}
-    - run: npm install
+    - run: npm install --prefer-offline --no-fund --no-progress
     - uses: microsoft/playwright-github-action@v1
-    - run: npm test
+    - run: npm run test
