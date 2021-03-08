@@ -20,7 +20,7 @@
     "@wildpeaks/eslint-config-commonjs": "11.2.0",
     "@wildpeaks/prettier-config": "11.2.0",
     "eslint": "7.21.0",
-    "jsdom": "16.4.0",
+    "jsdom": "16.5.0",
     "playwright": "1.9.1"
   }
 }
