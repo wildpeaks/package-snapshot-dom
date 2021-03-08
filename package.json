@@ -1,13 +1,17 @@
 {
   "private": true,
   "eslintConfig": {
-    "extends": "@wildpeaks/commonjs"
+    "extends": "@wildpeaks/commonjs",
+    "rules": {
+      "require-unicode-regexp": "off"
+    }
   },
   "eslintIgnore": [
     "packages"
   ],
   "prettier": "@wildpeaks/prettier-config",
   "scripts": {
+    "lint": "eslint src/**/*.js test/**/*.js",
     "build": "mocha src/build.js",
     "test": "mocha test/*.test.js"
   },
