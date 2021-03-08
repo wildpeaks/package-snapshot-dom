@@ -7,7 +7,6 @@
 		"LICENSE": true,
 		"*.lnk": true,
 		"*.url": true,
-		".npmrc": true,
 		".editorconfig": true,
 		"package-lock.json": true,
 		"node_modules": true,
