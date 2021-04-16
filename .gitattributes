@@ -1,14 +1,32 @@
 * -text
 
+LICENSE         text eol=lf
 .editorconfig   text eol=lf
 .gitattributes  text eol=lf
 .gitignore      text eol=lf
-LICENSE         text eol=lf
-README          text eol=lf
-*.txt           text eol=lf
-*.md            text eol=lf
-*.map           text eol=lf
-*.js            text eol=lf
+.prettierignore text eol=lf
 *.json          text eol=lf
-*.html          text eol=lf
+*.md            text eol=lf
+*.txt           text eol=lf
 *.yml           text eol=lf
+
+Dockerfile      text eol=lf
+.env            text eol=lf
+*.env           text eol=lf
+*.conf          text eol=lf
+*.sh            text eol=lf
+*.php           text eol=lf
+*.xml           text eol=lf
+
+*.css           text eol=lf
+*.scss          text eol=lf
+*.js            text eol=lf
+*.jsx           text eol=lf
+*.ts            text eol=lf
+*.tsx           text eol=lf
+*.map           text eol=lf
+*.html          text eol=lf
+*.svg           text eol=lf
+
+*.wrl           text eol=lf
+*.x3d           text eol=lf
