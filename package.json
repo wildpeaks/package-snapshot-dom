@@ -16,7 +16,7 @@
     "test": "mocha test/*.test.js"
   },
   "dependencies": {
-    "mocha": "8.3.2",
+    "mocha": "8.4.0",
     "rimraf": "3.0.2",
     "terser": "5.7.0"
   },
