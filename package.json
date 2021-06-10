@@ -25,6 +25,6 @@
     "@wildpeaks/prettier-config": "12.0.0",
     "eslint": "7.28.0",
     "jsdom": "16.6.0",
-    "playwright": "1.12.0"
+    "playwright": "1.12.1"
   }
 }
