@@ -21,7 +21,7 @@
     "terser": "5.9.0"
   },
   "devDependencies": {
-    "@wildpeaks/eslint-config-commonjs": "13.1.0",
+    "@wildpeaks/eslint-config-commonjs": "13.2.0",
     "@wildpeaks/prettier-config": "13.2.0",
     "eslint": "7.32.0",
     "jsdom": "17.0.0",
