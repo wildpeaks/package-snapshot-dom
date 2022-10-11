@@ -22,5 +22,5 @@ jobs:
         node-version: ${{ matrix.node }}
     - run: npm install --prefer-offline --no-fund --no-progress
     - run: npm run lint
-    - uses: microsoft/playwright-github-action@v1.5.2
+    - uses: microsoft/playwright-github-action@v1.5.3
     - run: npm run test
