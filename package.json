@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "mocha": "10.2.0",
-    "rimraf": "3.0.2",
+    "rimraf": "5.0.0",
     "terser": "5.16.6"
   },
   "devDependencies": {
