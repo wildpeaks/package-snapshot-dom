@@ -16,15 +16,15 @@
     "test": "mocha test/*.test.js"
   },
   "dependencies": {
-    "mocha": "10.0.0",
+    "mocha": "10.2.0",
     "rimraf": "3.0.2",
-    "terser": "5.14.2"
+    "terser": "5.16.6"
   },
   "devDependencies": {
     "@wildpeaks/eslint-config-commonjs": "15.6.0",
     "@wildpeaks/prettier-config": "15.6.0",
     "eslint": "8.35.0",
     "jsdom": "21.1.1",
-    "playwright": "1.25.0"
+    "playwright": "1.32.2"
   }
 }
